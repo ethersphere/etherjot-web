@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: space-grotesk;
+    src: url('/public/space-grotesk.woff2') format('woff2');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+    box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body,
+p {
+    margin: 0;
+    font-family: space-grotesk;
+}
+body {
+    background: #e8e8e8;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+main {
+    display: flex;
+    flex-direction: row;
 }
 
-.App-link {
-  color: #61dafb;
+input,
+select {
+    border: 0;
+    padding: 8px;
+    font-family: space-grotesk;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+    border: 0;
+    background-color: #ff8a00;
+    padding: 8px 16px;
+    font-family: space-grotesk;
+}
+
+.button-xs {
+    padding: 0 4px;
+    font-size: 12px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

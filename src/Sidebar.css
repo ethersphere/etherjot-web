@@ -1,0 +1,27 @@
+.sidebar {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    background-color: #e8e8e8;
+    padding: 16px;
+    height: 90vh;
+    overflow-y: scroll;
+}
+.sidebar > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+.sidebar > ul > li {
+    border-left: 3px solid #ff8a00;
+    background: #00000011;
+    padding: 8px;
+    font-size: 12px;
+}
+.sidebar > ul > li > img {
+    width: 100%;
+}

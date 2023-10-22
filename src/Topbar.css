@@ -1,0 +1,21 @@
+.topbar {
+    background-color: #e8e8e8;
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    height: 10vh;
+}
+.topbar > div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+.topbar > div > input {
+    font-family: monospace;
+    width: 64ch;
+}
