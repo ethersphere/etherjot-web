@@ -7,9 +7,11 @@ import './WelcomePage.css'
 
 interface Props {
     setGlobalState: (state: GlobalState) => void
+    isBeeRunning: boolean
+    hasPostageStamp: boolean
 }
 
-export function WelcomePage({ setGlobalState }: Props) {
+export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: Props) {
     const [blogName, setBlogName] = useState('')
 
     function onClick() {
@@ -29,13 +31,13 @@ export function WelcomePage({ setGlobalState }: Props) {
             <ul>
                 <li>
                     <Horizontal gap={8}>
-                        <SquareImage size={32} src="/yes.png" />
+                        <SquareImage size={32} src={isBeeRunning ? '/yes.png' : '/no.png'} />
                         Local Bee node
                     </Horizontal>
                 </li>
                 <li>
                     <Horizontal gap={8}>
-                        <SquareImage size={32} src="/yes.png" />
+                        <SquareImage size={32} src={hasPostageStamp ? '/yes.png' : '/no.png'} />
                         Usable postage stamp
                     </Horizontal>
                 </li>
@@ -45,6 +47,7 @@ export function WelcomePage({ setGlobalState }: Props) {
                     type="text"
                     placeholder="Enter your blog's name"
                     onChange={event => setBlogName(event.target.value)}
+                    disabled={!isBeeRunning || !hasPostageStamp}
                 />
                 <button onClick={onClick} disabled={blogName === ''}>
                     Create

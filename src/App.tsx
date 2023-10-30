@@ -1,3 +1,5 @@
+import { BeeDebug } from '@ethersphere/bee-js'
+import { Dates } from 'cafe-utility'
 import { Article, GlobalState, getGlobalState } from 'libetherjot'
 import { useEffect, useState } from 'react'
 import './App.css'
@@ -12,6 +14,8 @@ import { AssetBrowser } from './asset-browser/AssetBrowser'
 
 function App() {
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
+    const [isBeeRunning, setBeeRunning] = useState(false)
+    const [hasPostageStamp, setHasPostageStamp] = useState(false)
     const [tab, setTab] = useState('new-post')
     const [articleTitle, setArticleTitle] = useState('')
     const [articleContent, setArticleContent] = useState(DEFAULT_CONTENT)
@@ -30,8 +34,44 @@ function App() {
         }
     }, [])
 
+    async function checkBee() {
+        fetch('http://localhost:1635/addresses')
+            .then(async () => {
+                if (!isBeeRunning) {
+                    setBeeRunning(true)
+                }
+                const beeDebug = new BeeDebug('http://localhost:1635')
+                const stamps = await beeDebug.getAllPostageBatch()
+                if (stamps.some(x => x.usable)) {
+                    if (!hasPostageStamp) {
+                        setHasPostageStamp(true)
+                    }
+                } else {
+                    setHasPostageStamp(false)
+                }
+            })
+            .catch(() => {
+                setBeeRunning(false)
+                setHasPostageStamp(false)
+            })
+    }
+
+    useEffect(() => {
+        checkBee()
+        const interval = setInterval(() => {
+            checkBee()
+        }, Dates.seconds(5))
+        return () => clearInterval(interval)
+    }, [])
+
     if (!globalState) {
-        return <WelcomePage setGlobalState={setGlobalState} />
+        return (
+            <WelcomePage
+                setGlobalState={setGlobalState}
+                isBeeRunning={isBeeRunning}
+                hasPostageStamp={hasPostageStamp}
+            />
+        )
     }
 
     function insertAsset(reference: string) {
@@ -50,16 +90,10 @@ function App() {
                 />
             )}
             <Topbar
-                tab={tab}
                 setTab={setTab}
                 globalState={globalState}
-                articleTitle={articleTitle}
-                articleContent={articleContent}
-                editing={editing}
-                setEditing={setEditing}
-                articleBanner={articleBanner}
-                articleCategory={articleCategory}
-                articleTags={articleTags}
+                isBeeRunning={isBeeRunning}
+                hasPostageStamp={hasPostageStamp}
             />
             <main>
                 <Sidebar
@@ -82,6 +116,7 @@ function App() {
                 {tab === 'new-post' && (
                     <OptionsBar
                         globalState={globalState}
+                        articleContent={articleContent}
                         articleTitle={articleTitle}
                         setArticleTitle={setArticleTitle}
                         articleBanner={articleBanner}
@@ -90,6 +125,8 @@ function App() {
                         setArticleCategory={setArticleCategory}
                         articleTags={articleTags}
                         setArticleTags={setArticleTags}
+                        editing={editing}
+                        setEditing={setEditing}
                     />
                 )}
             </main>

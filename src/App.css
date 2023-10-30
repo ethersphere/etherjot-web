@@ -22,10 +22,15 @@ main {
 }
 
 input,
-select {
+select,
+textarea {
     border: 0;
     padding: 8px;
     font-family: space-grotesk;
+}
+
+textarea {
+    min-width: 30vw;
 }
 
 button {
