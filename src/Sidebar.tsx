@@ -13,6 +13,7 @@ interface Props {
     setArticleBanner: (banner: string | null) => void
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
+    setArticleComments: (comments: boolean) => void
     setShowAssetBrowser: (show: boolean) => void
 }
 
@@ -25,6 +26,7 @@ export function Sidebar({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
+    setArticleComments,
     setShowAssetBrowser
 }: Props) {
     function onReset() {
@@ -60,6 +62,7 @@ export function Sidebar({
                             setArticleBanner={setArticleBanner}
                             setArticleCategory={setArticleCategory}
                             setArticleTags={setArticleTags}
+                            setArticleComments={setArticleComments}
                         />
                     </li>
                 ))}
