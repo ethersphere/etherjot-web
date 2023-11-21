@@ -24,6 +24,7 @@ function App() {
   const [articleTags, setArticleTags] = useState<string>('')
   const [editing, setEditing] = useState<Article | false>(false)
   const [commentsEnabled, setCommentsEnabled] = useState<boolean>(false);
+  const [commentsFeed, setCommentsFeed] = useState<string>("");
   const [showAssetBrowser, setShowAssetBrowser] = useState(false)  
 
   useEffect(() => {
@@ -108,6 +109,7 @@ function App() {
           setShowAssetBrowser={setShowAssetBrowser}
           setArticleTags={setArticleTags}
           setArticleComments={setCommentsEnabled}
+          setArticleCommentsFeed={setCommentsFeed}
           />
         {tab === 'new-post' && (
           <NewPostPage articleContent={articleContent} setArticleContent={setArticleContent} />
@@ -131,6 +133,8 @@ function App() {
             setEditing={setEditing}
             commentsEnabled={commentsEnabled}
             setCommentsEnabled={setCommentsEnabled}
+            commentsFeed={commentsFeed}
+            setCommentsFeed={setCommentsFeed}
           />
         )}
       </main>

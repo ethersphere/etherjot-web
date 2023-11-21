@@ -19,6 +19,8 @@ interface Props {
   setEditing: (editing: Article | false) => void
   commentsEnabled: boolean
   setCommentsEnabled: (enabled: boolean) => void
+  commentsFeed: string;
+  setCommentsFeed: (feed: string) => void;
 }
 
 export function OptionsBar({
@@ -36,6 +38,8 @@ export function OptionsBar({
   setEditing,
   commentsEnabled,
   setCommentsEnabled,
+  commentsFeed,
+  setCommentsFeed
 }: Props) {
   const markdown = parseMarkdown(articleContent)
 
@@ -56,8 +60,9 @@ export function OptionsBar({
         .map(x => Strings.shrinkTrim(x))
         .filter(x => x),
       articleBanner || '',
-            '',
+      '',
       commentsEnabled,
+      commentsFeed,
       parse
     )
     globalState.articles.push(results)
@@ -99,9 +104,6 @@ export function OptionsBar({
       </select>
       <label>Tags (comma separated)</label>
       <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
-      <button onClick={onPublish} disabled={!articleTitle || !articleCategory}>
-        {editing ? 'Update' : 'Publish'}
-      </button>
       <label>
         Enable comments
         <input
@@ -110,6 +112,16 @@ export function OptionsBar({
           onChange={() => setCommentsEnabled(!commentsEnabled)}
         />
       </label>
+      <label>Approved comments feed</label>
+      <input
+        type="text"
+        disabled={!commentsEnabled}
+        value={commentsFeed}
+        onChange={(event) => setCommentsFeed(event.target.value)}
+      />
+      <button onClick={onPublish} disabled={!articleTitle || !articleCategory}>
+        {editing ? 'Update' : 'Publish'}
+      </button>
     </aside>
   )
 }

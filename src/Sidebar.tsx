@@ -14,6 +14,7 @@ interface Props {
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
     setArticleComments: (comments: boolean) => void
+    setArticleCommentsFeed: (commentsFeed: string) => void;
     setShowAssetBrowser: (show: boolean) => void
 }
 
@@ -27,6 +28,7 @@ export function Sidebar({
     setArticleCategory,
     setArticleTags,
     setArticleComments,
+    setArticleCommentsFeed,
     setShowAssetBrowser
 }: Props) {
     function onReset() {
@@ -40,6 +42,8 @@ export function Sidebar({
         setArticleTitle('')
         setArticleBanner(null)
         setArticleCategory('')
+        setArticleComments(false)
+        setArticleCommentsFeed('')
         setTab('new-post')
     }
 
@@ -63,6 +67,7 @@ export function Sidebar({
                             setArticleCategory={setArticleCategory}
                             setArticleTags={setArticleTags}
                             setArticleComments={setArticleComments}
+                            setArticleCommentsFeed={setArticleCommentsFeed}
                         />
                     </li>
                 ))}

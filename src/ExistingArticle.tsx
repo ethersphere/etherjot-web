@@ -14,6 +14,7 @@ interface Props {
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
     setArticleComments: (comments: boolean) => void
+    setArticleCommentsFeed: (commentsFeed: string) => void;
 }
 
 export function ExistingArticle({
@@ -26,7 +27,8 @@ export function ExistingArticle({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
-    setArticleComments
+    setArticleComments,
+    setArticleCommentsFeed
 }: Props) {
     async function onDelete() {
         globalState.articles = globalState.articles.filter(x => x !== article)
@@ -44,6 +46,7 @@ export function ExistingArticle({
         setArticleCategory(article.category)
         setArticleTags(article.tags.join(', '))
         setArticleComments(article.comments)
+        setArticleCommentsFeed(article.commentsFeed)
         setTab('new-post')
     }
 
