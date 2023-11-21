@@ -1,4 +1,4 @@
-import { Strings } from 'cafe-utility'
+import { Dates, Strings } from 'cafe-utility'
 import { Article, GlobalState, createArticlePage, parseMarkdown } from 'libetherjot'
 import { parse } from 'marked'
 import { save } from './Saver'
@@ -17,6 +17,8 @@ interface Props {
     setArticleTags: (tags: string) => void
     editing: Article | false
     setEditing: (editing: Article | false) => void
+    articleType: 'regular' | 'h1' | 'h2'
+    setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
 
 export function OptionsBar({
@@ -31,7 +33,9 @@ export function OptionsBar({
     articleTags,
     setArticleTags,
     editing,
-    setEditing
+    setEditing,
+    articleType,
+    setArticleType
 }: Props) {
     const markdown = parseMarkdown(articleContent)
 
@@ -52,11 +56,11 @@ export function OptionsBar({
                 .map(x => Strings.shrinkTrim(x))
                 .filter(x => x),
             articleBanner || '',
-            '',
+            Dates.isoDate(),
+            articleType,
             parse
         )
         globalState.articles.push(results)
-        globalState.configuration.allowDonations = true
         await save(globalState)
         setEditing(false)
         window.location.reload()
@@ -86,11 +90,16 @@ export function OptionsBar({
                 ))}
             </select>
             <label>Type</label>
-            <select>
-                <option>Regular</option>
-                <option>Primary</option>
-                <option>Secondary</option>
-                <option>Highlight</option>
+            <select onChange={event => setArticleType(event.target.value as any)}>
+                <option value="regular" selected={articleType === 'regular'}>
+                    Regular
+                </option>
+                <option value="h1" selected={articleType === 'h1'}>
+                    Primary
+                </option>
+                <option value="h2" selected={articleType === 'h2'}>
+                    Secondary
+                </option>
             </select>
             <label>Tags (comma separated)</label>
             <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />

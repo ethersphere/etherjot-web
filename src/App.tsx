@@ -22,6 +22,7 @@ function App() {
     const [articleBanner, setArticleBanner] = useState<string | null>(null)
     const [articleCategory, setArticleCategory] = useState<string>('')
     const [articleTags, setArticleTags] = useState<string>('')
+    const [articleType, setArticleType] = useState<'regular' | 'h1' | 'h2'>('regular')
     const [editing, setEditing] = useState<Article | false>(false)
     const [showAssetBrowser, setShowAssetBrowser] = useState(false)
 
@@ -106,6 +107,7 @@ function App() {
                     setArticleCategory={setArticleCategory}
                     setShowAssetBrowser={setShowAssetBrowser}
                     setArticleTags={setArticleTags}
+                    setArticleType={setArticleType}
                 />
                 {tab === 'new-post' && (
                     <NewPostPage articleContent={articleContent} setArticleContent={setArticleContent} />
@@ -125,6 +127,8 @@ function App() {
                         setArticleCategory={setArticleCategory}
                         articleTags={articleTags}
                         setArticleTags={setArticleTags}
+                        articleType={articleType}
+                        setArticleType={setArticleType}
                         editing={editing}
                         setEditing={setEditing}
                     />

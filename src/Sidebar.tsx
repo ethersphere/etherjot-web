@@ -14,6 +14,7 @@ interface Props {
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
     setShowAssetBrowser: (show: boolean) => void
+    setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
 
 export function Sidebar({
@@ -25,7 +26,8 @@ export function Sidebar({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
-    setShowAssetBrowser
+    setShowAssetBrowser,
+    setArticleType
 }: Props) {
     function onReset() {
         localStorage.clear()
@@ -39,6 +41,7 @@ export function Sidebar({
         setArticleBanner(null)
         setArticleCategory('')
         setTab('new-post')
+        setArticleType('regular')
     }
 
     return (
@@ -60,6 +63,7 @@ export function Sidebar({
                             setArticleBanner={setArticleBanner}
                             setArticleCategory={setArticleCategory}
                             setArticleTags={setArticleTags}
+                            setArticleType={setArticleType}
                         />
                     </li>
                 ))}

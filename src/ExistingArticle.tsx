@@ -13,6 +13,7 @@ interface Props {
     setArticleBanner: (banner: string | null) => void
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
+    setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
 
 export function ExistingArticle({
@@ -24,7 +25,8 @@ export function ExistingArticle({
     setArticleTitle,
     setArticleBanner,
     setArticleCategory,
-    setArticleTags
+    setArticleTags,
+    setArticleType
 }: Props) {
     async function onDelete() {
         globalState.articles = globalState.articles.filter(x => x !== article)
@@ -41,6 +43,7 @@ export function ExistingArticle({
         setArticleBanner(article.banner)
         setArticleCategory(article.category)
         setArticleTags(article.tags.join(', '))
+        setArticleType(article.kind as any)
         setTab('new-post')
     }
 

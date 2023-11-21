@@ -24,6 +24,7 @@ main {
 input,
 select,
 textarea {
+    border-radius: 4px;
     border: 0;
     padding: 8px;
     font-family: space-grotesk;
@@ -38,10 +39,25 @@ button {
     background-color: #ff8a00;
     padding: 8px 16px;
     font-family: space-grotesk;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #ff9e2e;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #ffc787;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #ff8a00;
 }
 
 .button-xs {
-    padding: 0 4px;
+    padding: 2px 6px;
     font-size: 12px;
 }
 
@@ -49,4 +65,9 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+.global-settings {
+    padding: 16px;
+    padding-bottom: 64px;
 }
