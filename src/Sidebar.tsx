@@ -13,9 +13,9 @@ interface Props {
     setArticleBanner: (banner: string | null) => void
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
-    setArticleComments: (comments: boolean) => void
-    setArticleCommentsFeed: (commentsFeed: string) => void;
+    setArticleCommentsFeed: (commentsFeed: string) => void
     setShowAssetBrowser: (show: boolean) => void
+    setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
 
 export function Sidebar({
@@ -27,9 +27,9 @@ export function Sidebar({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
-    setArticleComments,
     setArticleCommentsFeed,
-    setShowAssetBrowser
+    setShowAssetBrowser,
+    setArticleType
 }: Props) {
     function onReset() {
         localStorage.clear()
@@ -42,9 +42,9 @@ export function Sidebar({
         setArticleTitle('')
         setArticleBanner(null)
         setArticleCategory('')
-        setArticleComments(false)
         setArticleCommentsFeed('')
         setTab('new-post')
+        setArticleType('regular')
     }
 
     return (
@@ -66,8 +66,8 @@ export function Sidebar({
                             setArticleBanner={setArticleBanner}
                             setArticleCategory={setArticleCategory}
                             setArticleTags={setArticleTags}
-                            setArticleComments={setArticleComments}
                             setArticleCommentsFeed={setArticleCommentsFeed}
+                            setArticleType={setArticleType}
                         />
                     </li>
                 ))}
