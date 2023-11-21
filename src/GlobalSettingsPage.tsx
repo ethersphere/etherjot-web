@@ -126,11 +126,11 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
             <h2>Extensions</h2>
             <Container>
                 <Horizontal gap={8}>
-                    <input onChange={event => setDonations(event.target.checked)} type="checkbox" />
+                    <input onChange={event => setDonations(event.target.checked)} type="checkbox" checked={donations} />
                     Enable taking donations
                 </Horizontal>
                 <Horizontal gap={8}>
-                    <input onChange={event => setComments(event.target.checked)} type="checkbox" />
+                    <input onChange={event => setComments(event.target.checked)} type="checkbox" checked={comments} />
                     Enable comments
                 </Horizontal>
             </Container>

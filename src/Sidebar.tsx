@@ -1,3 +1,4 @@
+import { Strings } from 'cafe-utility'
 import { Article, GlobalState } from 'libetherjot'
 import { DEFAULT_CONTENT } from './Constants'
 import { ExistingArticle } from './ExistingArticle'
@@ -42,7 +43,7 @@ export function Sidebar({
         setArticleTitle('')
         setArticleBanner(null)
         setArticleCategory('')
-        setArticleCommentsFeed('')
+        setArticleCommentsFeed(Strings.randomHex(40))
         setTab('new-post')
         setArticleType('regular')
     }

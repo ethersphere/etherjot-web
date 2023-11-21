@@ -20,7 +20,6 @@ interface Props {
     articleType: 'regular' | 'h1' | 'h2'
     setArticleType: (type: 'regular' | 'h1' | 'h2') => void
     commentsFeed: string
-    setCommentsFeed: (feed: string) => void
 }
 
 export function OptionsBar({
@@ -38,8 +37,7 @@ export function OptionsBar({
     setEditing,
     articleType,
     setArticleType,
-    commentsFeed,
-    setCommentsFeed
+    commentsFeed
 }: Props) {
     const markdown = parseMarkdown(articleContent)
 
@@ -108,13 +106,6 @@ export function OptionsBar({
             </select>
             <label>Tags (comma separated)</label>
             <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
-            <label>Approved comments feed</label>
-            <input
-                type="text"
-                disabled={!globalState.configuration.extensions.comments}
-                value={commentsFeed}
-                onChange={event => setCommentsFeed(event.target.value)}
-            />
             <button onClick={onPublish} disabled={!articleTitle || !articleCategory}>
                 {editing ? 'Update' : 'Publish'}
             </button>

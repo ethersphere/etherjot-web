@@ -1,5 +1,5 @@
 import { BeeDebug } from '@ethersphere/bee-js'
-import { Dates } from 'cafe-utility'
+import { Dates, Strings } from 'cafe-utility'
 import { Article, GlobalState, getGlobalState } from 'libetherjot'
 import { useEffect, useState } from 'react'
 import './App.css'
@@ -24,7 +24,7 @@ function App() {
     const [articleTags, setArticleTags] = useState<string>('')
     const [articleType, setArticleType] = useState<'regular' | 'h1' | 'h2'>('regular')
     const [editing, setEditing] = useState<Article | false>(false)
-    const [commentsFeed, setCommentsFeed] = useState<string>('')
+    const [commentsFeed, setCommentsFeed] = useState<string>(Strings.randomHex(40))
     const [showAssetBrowser, setShowAssetBrowser] = useState(false)
 
     useEffect(() => {
@@ -132,7 +132,6 @@ function App() {
                         editing={editing}
                         setEditing={setEditing}
                         commentsFeed={commentsFeed}
-                        setCommentsFeed={setCommentsFeed}
                         articleType={articleType}
                         setArticleType={setArticleType}
                     />
