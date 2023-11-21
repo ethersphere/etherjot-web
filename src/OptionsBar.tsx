@@ -19,6 +19,7 @@ interface Props {
     setEditing: (editing: Article | false) => void
     articleType: 'regular' | 'h1' | 'h2'
     setArticleType: (type: 'regular' | 'h1' | 'h2') => void
+    commentsFeed: string
 }
 
 export function OptionsBar({
@@ -35,7 +36,8 @@ export function OptionsBar({
     editing,
     setEditing,
     articleType,
-    setArticleType
+    setArticleType,
+    commentsFeed
 }: Props) {
     const markdown = parseMarkdown(articleContent)
 
@@ -57,6 +59,7 @@ export function OptionsBar({
                 .filter(x => x),
             articleBanner || '',
             Dates.isoDate(),
+            commentsFeed,
             articleType,
             parse
         )

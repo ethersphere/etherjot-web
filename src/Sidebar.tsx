@@ -1,3 +1,4 @@
+import { Strings } from 'cafe-utility'
 import { Article, GlobalState } from 'libetherjot'
 import { DEFAULT_CONTENT } from './Constants'
 import { ExistingArticle } from './ExistingArticle'
@@ -13,6 +14,7 @@ interface Props {
     setArticleBanner: (banner: string | null) => void
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
+    setArticleCommentsFeed: (commentsFeed: string) => void
     setShowAssetBrowser: (show: boolean) => void
     setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
@@ -26,6 +28,7 @@ export function Sidebar({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
+    setArticleCommentsFeed,
     setShowAssetBrowser,
     setArticleType
 }: Props) {
@@ -40,6 +43,7 @@ export function Sidebar({
         setArticleTitle('')
         setArticleBanner(null)
         setArticleCategory('')
+        setArticleCommentsFeed(Strings.randomHex(40))
         setTab('new-post')
         setArticleType('regular')
     }
@@ -63,6 +67,7 @@ export function Sidebar({
                             setArticleBanner={setArticleBanner}
                             setArticleCategory={setArticleCategory}
                             setArticleTags={setArticleTags}
+                            setArticleCommentsFeed={setArticleCommentsFeed}
                             setArticleType={setArticleType}
                         />
                     </li>

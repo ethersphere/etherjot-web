@@ -13,6 +13,7 @@ interface Props {
     setArticleBanner: (banner: string | null) => void
     setArticleCategory: (category: string) => void
     setArticleTags: (tags: string) => void
+    setArticleCommentsFeed: (commentsFeed: string) => void
     setArticleType: (type: 'regular' | 'h1' | 'h2') => void
 }
 
@@ -26,6 +27,7 @@ export function ExistingArticle({
     setArticleBanner,
     setArticleCategory,
     setArticleTags,
+    setArticleCommentsFeed,
     setArticleType
 }: Props) {
     async function onDelete() {
@@ -43,6 +45,7 @@ export function ExistingArticle({
         setArticleBanner(article.banner)
         setArticleCategory(article.category)
         setArticleTags(article.tags.join(', '))
+        setArticleCommentsFeed(article.commentsFeed)
         setArticleType(article.kind as any)
         setTab('new-post')
     }
