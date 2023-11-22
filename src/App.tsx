@@ -1,5 +1,5 @@
 import { BeeDebug } from '@ethersphere/bee-js'
-import { Dates } from 'cafe-utility'
+import { Dates, Strings } from 'cafe-utility'
 import { Article, GlobalState, getGlobalState } from 'libetherjot'
 import { useEffect, useState } from 'react'
 import './App.css'

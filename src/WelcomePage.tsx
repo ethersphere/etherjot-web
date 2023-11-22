@@ -13,6 +13,7 @@ interface Props {
 
 export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: Props) {
     const [blogName, setBlogName] = useState('')
+    const [accepted, setAccepted] = useState(false)
 
     function onClick() {
         createDefaultGlobalState(blogName)
@@ -42,14 +43,19 @@ export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: P
                     </Horizontal>
                 </li>
             </ul>
-            <Horizontal>
+            <Horizontal gap={8}>
+                <input id="agreement" type="checkbox" onChange={event => setAccepted(event.target.checked)} />I
+                understand that it is my responsibility to ensure that the postage stamp TTL does not run out. If the
+                stamp expires, I may lose my blog.
+            </Horizontal>
+            <Horizontal gap={8}>
                 <input
                     type="text"
                     placeholder="Enter your blog's name"
                     onChange={event => setBlogName(event.target.value)}
-                    disabled={!isBeeRunning || !hasPostageStamp}
+                    disabled={!hasPostageStamp}
                 />
-                <button onClick={onClick} disabled={blogName === ''}>
+                <button onClick={onClick} disabled={!blogName || !accepted}>
                     Create
                 </button>
             </Horizontal>
