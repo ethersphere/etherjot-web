@@ -26,8 +26,7 @@ export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: P
 
     return (
         <div className="welcome-page">
-            <h1>Hello</h1>
-            <p>It looks like this is your first time using Etherjot.</p>
+            <h1>Welcome to Etherjot</h1>
             <p>To get started with your blog, you need the following:</p>
             <ul>
                 <li>

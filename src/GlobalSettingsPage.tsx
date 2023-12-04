@@ -1,4 +1,4 @@
-import { GlobalState } from 'libetherjot'
+import { Asset, GlobalState, getGlobalState, saveGlobalState } from 'libetherjot'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { Container } from './Container'
@@ -9,9 +9,11 @@ import { Setting } from './Setting'
 interface Props {
     globalState: GlobalState
     setGlobalState: (state: GlobalState) => void
+    setShowAssetPicker: (show: boolean) => void
+    setAssetPickerCallback: any
 }
 
-export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
+export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPicker, setAssetPickerCallback }: Props) {
     const [title, setTitle] = useState(globalState.configuration.title)
     const [headerTitle, setHeaderTitle] = useState(globalState.configuration.header.title)
     const [headerLogo, setHeaderLogo] = useState(globalState.configuration.header.logo)
@@ -25,6 +27,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
     const [footerGitHub, setFooterGitHub] = useState(globalState.configuration.footer.links.github)
     const [footerYouTube, setFooterYouTube] = useState(globalState.configuration.footer.links.youtube)
     const [footerReddit, setFooterReddit] = useState(globalState.configuration.footer.links.reddit)
+    const [ethereumAddress, setEthereumAddress] = useState(globalState.configuration.extensions.ethereumAddress)
     const [donations, setDonations] = useState(globalState.configuration.extensions.donations)
     const [comments, setComments] = useState(globalState.configuration.extensions.comments)
 
@@ -42,6 +45,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
         globalState.configuration.footer.links.github = footerGitHub
         globalState.configuration.footer.links.youtube = footerYouTube
         globalState.configuration.footer.links.reddit = footerReddit
+        globalState.configuration.extensions.ethereumAddress = ethereumAddress
         globalState.configuration.extensions.donations = donations
         globalState.configuration.extensions.comments = comments
         await save(globalState)
@@ -54,7 +58,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
     }
 
     async function onExport() {
-        Swal.fire('Save this to a file', JSON.stringify(globalState))
+        Swal.fire('Save this to a file', JSON.stringify(await saveGlobalState(globalState)))
     }
 
     async function onImport() {
@@ -62,10 +66,16 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
             title: 'Import',
             input: 'textarea',
             inputPlaceholder: 'Paste your export here',
-            showCancelButton: true
+            showCancelButton: true,
+            confirmButtonText: 'Import'
         }).then(result => {
             if (result.value) {
-                setGlobalState(JSON.parse(result.value))
+                getGlobalState(JSON.parse(result.value)).then(async x => {
+                    setGlobalState({ ...x })
+                    await saveGlobalState(globalState).then(async state => {
+                        localStorage.setItem('state', JSON.stringify(state))
+                    })
+                })
             }
         })
     }
@@ -88,13 +98,28 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
                 <Setting title="Title" value={headerTitle} onChange={setHeaderTitle} />
                 <Setting title="Link Label" value={headerLinkLabel} onChange={setHeaderLinkLabel} />
                 <Setting title="Link Address" value={headerLinkAddress} onChange={setHeaderLinkAddress} />
-                <Setting
-                    title="Logo"
-                    type="select"
-                    value={headerLogo}
-                    onChange={setHeaderLogo}
-                    values={globalState.assets.map(x => ({ name: x.name, value: x.reference }))}
-                />
+                <div>
+                    <p style={{ paddingLeft: '8px', paddingBottom: '8px' }}>Logo</p>
+                    {headerLogo && (
+                        <div>
+                            <img
+                                src={`http://localhost:1633/bzz/${headerLogo}`}
+                                style={{ width: '48px', height: '48px' }}
+                            />
+                        </div>
+                    )}
+                    <button
+                        onClick={() => {
+                            setAssetPickerCallback(() => (asset: Asset) => {
+                                setHeaderLogo(asset.reference)
+                                setShowAssetPicker(false)
+                            })
+                            setShowAssetPicker(true)
+                        }}
+                    >
+                        Pick
+                    </button>
+                </div>
                 <Setting
                     title="Description"
                     type="textarea"
@@ -125,6 +150,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState }: Props) {
             </Container>
             <h2>Extensions</h2>
             <Container>
+                <Setting title="Ethereum Address" value={ethereumAddress} onChange={setEthereumAddress} />
                 <Horizontal gap={8}>
                     <input onChange={event => setDonations(event.target.checked)} type="checkbox" checked={donations} />
                     Enable taking donations

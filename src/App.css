@@ -71,3 +71,8 @@ ul {
     padding: 16px;
     padding-bottom: 64px;
 }
+.editing {
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+}

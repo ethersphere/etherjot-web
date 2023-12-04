@@ -1,13 +1,18 @@
 import { Bee } from '@ethersphere/bee-js'
 import { Article, GlobalState } from 'libetherjot'
+import Swal from 'sweetalert2'
+import { DEFAULT_CONTENT } from './Constants'
+import { Horizontal } from './Horizontal'
 import { Row } from './Row'
 import { save } from './Saver'
+import { Vertical } from './Vertical'
 
 interface Props {
     article: Article
     globalState: GlobalState
     setTab: (tab: string) => void
     setEditing: (editing: Article | false) => void
+    articleContent: string
     setArticleContent: (content: string) => void
     setArticleTitle: (title: string) => void
     setArticleBanner: (banner: string | null) => void
@@ -22,6 +27,7 @@ export function ExistingArticle({
     globalState,
     setTab,
     setEditing,
+    articleContent,
     setArticleContent,
     setArticleTitle,
     setArticleBanner,
@@ -37,6 +43,16 @@ export function ExistingArticle({
     }
 
     async function onEdit() {
+        if (articleContent !== DEFAULT_CONTENT) {
+            const confirmed = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will lose unsaved changes',
+                showCancelButton: true
+            })
+            if (!confirmed.isConfirmed) {
+                return
+            }
+        }
         const bee = new Bee('http://localhost:1633')
         const raw = await bee.downloadFile(article.markdown)
         setEditing(article)
@@ -51,16 +67,20 @@ export function ExistingArticle({
     }
 
     return (
-        <Row>
-            <a href={`http://localhost:1633/bzz/${globalState.feed}/${article.path}`} target="_blank">
-                {article.title}
-            </a>
-            <button className="button-xs" onClick={onEdit}>
-                Edit
-            </button>
-            <button className="button-xs" onClick={onDelete}>
-                Delete
-            </button>
-        </Row>
+        <Vertical gap={8}>
+            <Row>
+                <a href={`http://localhost:1633/bzz/${globalState.feed}/${article.path}`} target="_blank">
+                    {article.title}
+                </a>
+            </Row>
+            <Horizontal gap={8}>
+                <button className="button-xs" onClick={onEdit}>
+                    Edit
+                </button>
+                <button className="button-xs" onClick={onDelete}>
+                    Delete
+                </button>
+            </Horizontal>
+        </Vertical>
     )
 }

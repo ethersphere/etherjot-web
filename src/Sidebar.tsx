@@ -1,5 +1,6 @@
 import { Strings } from 'cafe-utility'
 import { Article, GlobalState } from 'libetherjot'
+import Swal from 'sweetalert2'
 import { DEFAULT_CONTENT } from './Constants'
 import { ExistingArticle } from './ExistingArticle'
 import { Row } from './Row'
@@ -8,7 +9,9 @@ import './Sidebar.css'
 interface Props {
     globalState: GlobalState
     setTab: (tab: string) => void
+    editing: Article | false
     setEditing: (editing: Article | false) => void
+    articleContent: string
     setArticleContent: (content: string) => void
     setArticleTitle: (title: string) => void
     setArticleBanner: (banner: string | null) => void
@@ -22,7 +25,9 @@ interface Props {
 export function Sidebar({
     globalState,
     setTab,
+    editing,
     setEditing,
+    articleContent,
     setArticleContent,
     setArticleTitle,
     setArticleBanner,
@@ -37,7 +42,17 @@ export function Sidebar({
         window.location.reload()
     }
 
-    function onNewArticle() {
+    async function onNewArticle() {
+        if (articleContent !== DEFAULT_CONTENT) {
+            const confirmed = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will lose unsaved changes',
+                showCancelButton: true
+            })
+            if (!confirmed.isConfirmed) {
+                return
+            }
+        }
         setEditing(false)
         setArticleContent(DEFAULT_CONTENT)
         setArticleTitle('')
@@ -54,6 +69,12 @@ export function Sidebar({
                 <p>Posts</p>
                 <button onClick={onNewArticle}>+</button>
             </Row>
+            <button onClick={() => setShowAssetBrowser(true)}>Asset Browser</button>
+            {editing && (
+                <p className="editing">
+                    <strong>Editing:</strong> {editing.title}
+                </p>
+            )}
             <ul>
                 {globalState.articles.map((x, i) => (
                     <li key={i}>
@@ -62,6 +83,7 @@ export function Sidebar({
                             globalState={globalState}
                             setTab={setTab}
                             setEditing={setEditing}
+                            articleContent={articleContent}
                             setArticleContent={setArticleContent}
                             setArticleTitle={setArticleTitle}
                             setArticleBanner={setArticleBanner}
@@ -73,7 +95,6 @@ export function Sidebar({
                     </li>
                 ))}
             </ul>
-            <button onClick={() => setShowAssetBrowser(true)}>Asset Browser</button>
             <button onClick={onReset}>Reset</button>
         </aside>
     )

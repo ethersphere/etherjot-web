@@ -17,6 +17,7 @@
     background: #fff;
     border-radius: 4px;
     padding: 8px;
+    overflow: scroll;
 }
 .asset-browser-header {
     display: flex;
@@ -26,9 +27,10 @@
 }
 .thumbnail-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    overflow: scroll;
 }
 .thumbnail > img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
 }

@@ -1,5 +1,6 @@
 import { Strings, Types } from 'cafe-utility'
 import { GlobalState } from 'libetherjot'
+import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { save } from '../Saver'
 import './AssetBrowser.css'
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser, insertAsset }: Props) {
+    const [_, rerender] = useState(0)
+
     async function onNewAsset() {
         await Swal.fire({
             title: 'Please Select Image File',
@@ -75,11 +78,13 @@ export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser,
                 <div className="thumbnail-container">
                     {globalState.assets.map(x => (
                         <Thumbnail
+                            globalState={globalState}
                             key={x.reference}
                             contentType={x.contentType}
                             name={x.name}
                             reference={x.reference}
                             insertAsset={insertAsset}
+                            rerender={rerender}
                         />
                     ))}
                 </div>

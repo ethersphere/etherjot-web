@@ -1,5 +1,5 @@
-import { Dates, Strings } from 'cafe-utility'
-import { Article, GlobalState, createArticlePage, parseMarkdown } from 'libetherjot'
+import { Strings } from 'cafe-utility'
+import { Article, Asset, GlobalState, createArticlePage, parseMarkdown } from 'libetherjot'
 import { parse } from 'marked'
 import { save } from './Saver'
 import './Sidebar.css'
@@ -20,6 +20,10 @@ interface Props {
     articleType: 'regular' | 'h1' | 'h2'
     setArticleType: (type: 'regular' | 'h1' | 'h2') => void
     commentsFeed: string
+    articleDate: string
+    setArticleDate: (date: string) => void
+    setShowAssetPicker: (show: boolean) => void
+    setAssetPickerCallback: any
 }
 
 export function OptionsBar({
@@ -37,7 +41,11 @@ export function OptionsBar({
     setEditing,
     articleType,
     setArticleType,
-    commentsFeed
+    commentsFeed,
+    articleDate,
+    setArticleDate,
+    setShowAssetPicker,
+    setAssetPickerCallback
 }: Props) {
     const markdown = parseMarkdown(articleContent)
 
@@ -58,7 +66,7 @@ export function OptionsBar({
                 .map(x => Strings.shrinkTrim(x))
                 .filter(x => x),
             articleBanner || '',
-            Dates.isoDate(),
+            articleDate,
             commentsFeed,
             articleType,
             parse
@@ -79,19 +87,24 @@ export function OptionsBar({
                 <strong>Category</strong>
             </label>
             <input type="text" value={articleCategory} onChange={event => setArticleCategory(event.target.value)} />
+            <label>
+                <strong>Date</strong>
+            </label>
+            <input type="text" value={articleDate} onChange={event => setArticleDate(event.target.value)} />
             <label>Banner image</label>
-            <select onChange={event => setArticleBanner(event.target.value)}>
-                <option value={''}>None</option>
-                {globalState.assets.map(x => (
-                    <option
-                        key={x.reference}
-                        value={`/bzz/${x.reference}/`}
-                        selected={articleBanner === `/bzz/${x.reference}/`}
-                    >
-                        {x.name}
-                    </option>
-                ))}
-            </select>
+            {articleBanner && <img src={`http://localhost:1633${articleBanner}`} />}
+            <button
+                onClick={() => {
+                    setShowAssetPicker(true)
+                    const callbackFn = (asset: Asset) => {
+                        setArticleBanner('/bzz/' + asset.reference)
+                        setShowAssetPicker(false)
+                    }
+                    setAssetPickerCallback(() => callbackFn)
+                }}
+            >
+                Select
+            </button>
             <label>Type</label>
             <select onChange={event => setArticleType(event.target.value as any)}>
                 <option value="regular" selected={articleType === 'regular'}>

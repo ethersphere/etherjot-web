@@ -1,15 +1,13 @@
 interface Props {
     children: React.ReactNode
     gap?: number
-    between?: boolean
 }
 
-export function Horizontal({ children, gap = 0, between }: Props) {
+export function Vertical({ children, gap = 0 }: Props) {
     const style = {
         display: 'flex',
-        flexDirection: 'row' as any,
+        flexDirection: 'column' as any,
         alignItems: 'center',
-        justifyContent: between ? 'space-between' : 'flex-start',
         gap: `${gap}px`
     }
 

@@ -11,6 +11,7 @@ import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { WelcomePage } from './WelcomePage'
 import { AssetBrowser } from './asset-browser/AssetBrowser'
+import { AssetPicker } from './asset-browser/AssetPicker'
 
 function App() {
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
@@ -23,9 +24,12 @@ function App() {
     const [articleCategory, setArticleCategory] = useState<string>('')
     const [articleTags, setArticleTags] = useState<string>('')
     const [articleType, setArticleType] = useState<'regular' | 'h1' | 'h2'>('regular')
+    const [articleDate, setArticleDate] = useState(Dates.isoDate())
     const [editing, setEditing] = useState<Article | false>(false)
     const [commentsFeed, setCommentsFeed] = useState<string>(Strings.randomHex(40))
     const [showAssetBrowser, setShowAssetBrowser] = useState(false)
+    const [showAssetPicker, setShowAssetPicker] = useState(false)
+    const [assetPickerCallback, setAssetPickerCallback] = useState<any>(() => {})
 
     useEffect(() => {
         const storedState = localStorage.getItem('state')
@@ -91,8 +95,10 @@ function App() {
                     insertAsset={insertAsset}
                 />
             )}
+            {showAssetPicker && <AssetPicker globalState={globalState} callback={assetPickerCallback} />}
             <Topbar
                 setTab={setTab}
+                articleContent={articleContent}
                 globalState={globalState}
                 isBeeRunning={isBeeRunning}
                 hasPostageStamp={hasPostageStamp}
@@ -101,7 +107,9 @@ function App() {
                 <Sidebar
                     globalState={globalState}
                     setTab={setTab}
+                    editing={editing}
                     setEditing={setEditing}
+                    articleContent={articleContent}
                     setArticleContent={setArticleContent}
                     setArticleTitle={setArticleTitle}
                     setArticleBanner={setArticleBanner}
@@ -115,7 +123,12 @@ function App() {
                     <NewPostPage articleContent={articleContent} setArticleContent={setArticleContent} />
                 )}
                 {tab === 'global-settings' && (
-                    <GlobalSettingsPage globalState={globalState} setGlobalState={setGlobalState} />
+                    <GlobalSettingsPage
+                        globalState={globalState}
+                        setGlobalState={setGlobalState}
+                        setAssetPickerCallback={setAssetPickerCallback}
+                        setShowAssetPicker={setShowAssetPicker}
+                    />
                 )}
                 {tab === 'new-post' && (
                     <OptionsBar
@@ -134,6 +147,10 @@ function App() {
                         commentsFeed={commentsFeed}
                         articleType={articleType}
                         setArticleType={setArticleType}
+                        articleDate={articleDate}
+                        setArticleDate={setArticleDate}
+                        setShowAssetPicker={setShowAssetPicker}
+                        setAssetPickerCallback={setAssetPickerCallback}
                     />
                 )}
             </main>
