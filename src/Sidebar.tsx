@@ -92,6 +92,7 @@ export function Sidebar({
                 </p>
             )}
             <ul>
+                {!globalState.articles.length && <p>No posts yet</p>}
                 {globalState.articles.map((x, i) => (
                     <li key={i}>
                         <ExistingArticle

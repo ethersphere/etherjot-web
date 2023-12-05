@@ -58,7 +58,13 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
     }
 
     async function onExport() {
-        Swal.fire('Save this to a file', JSON.stringify(await saveGlobalState(globalState)))
+        const data = JSON.stringify(await saveGlobalState(globalState))
+        const element = document.createElement('a')
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data))
+        element.setAttribute('download', 'etherjot-export.json')
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
     }
 
     async function onImport() {
