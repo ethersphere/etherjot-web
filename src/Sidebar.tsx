@@ -37,7 +37,23 @@ export function Sidebar({
     setShowAssetBrowser,
     setArticleType
 }: Props) {
-    function onReset() {
+    async function onReset() {
+        const confirmed = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will lose all your posts. You can export your blog from the settings page.',
+            showCancelButton: true
+        })
+        if (!confirmed.isConfirmed) {
+            return
+        }
+        const confirmedAgain = await Swal.fire({
+            title: 'Are you really sure?',
+            text: 'Your blog will be reset. This cannot be undone.',
+            showCancelButton: true
+        })
+        if (!confirmedAgain.isConfirmed) {
+            return
+        }
         localStorage.clear()
         window.location.reload()
     }
