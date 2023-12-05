@@ -92,7 +92,7 @@ export function OptionsBar({
             </label>
             <input type="text" value={articleDate} onChange={event => setArticleDate(event.target.value)} />
             <label>Banner image</label>
-            {articleBanner && <img src={`http://localhost:1633${articleBanner}`} />}
+            {articleBanner && <img src={`${globalState.beeApi}${articleBanner}`} />}
             <button
                 onClick={() => {
                     setShowAssetPicker(true)

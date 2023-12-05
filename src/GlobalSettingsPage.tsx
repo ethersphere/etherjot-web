@@ -103,7 +103,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                     {headerLogo && (
                         <div>
                             <img
-                                src={`http://localhost:1633/bzz/${headerLogo}`}
+                                src={`${globalState.beeApi}/bzz/${headerLogo}`}
                                 style={{ width: '48px', height: '48px' }}
                             />
                         </div>

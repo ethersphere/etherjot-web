@@ -53,7 +53,7 @@ export function ExistingArticle({
                 return
             }
         }
-        const bee = new Bee('http://localhost:1633')
+        const bee = new Bee(globalState.beeApi)
         const raw = await bee.downloadFile(article.markdown)
         setEditing(article)
         setArticleTitle(article.title)
@@ -69,7 +69,7 @@ export function ExistingArticle({
     return (
         <Vertical gap={8}>
             <Row>
-                <a href={`http://localhost:1633/bzz/${globalState.feed}/${article.path}`} target="_blank">
+                <a href={`${globalState.beeApi}/bzz/${globalState.feed}/${article.path}`} target="_blank">
                     {article.title}
                 </a>
             </Row>

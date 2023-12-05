@@ -14,6 +14,9 @@ import { AssetBrowser } from './asset-browser/AssetBrowser'
 import { AssetPicker } from './asset-browser/AssetPicker'
 
 function App() {
+    const [beeApi, setBeeApi] = useState<string>('http://localhost:1633')
+    const [beeDebugApi, setBeeDebugApi] = useState<string>('http://localhost:1635')
+    const [postageBatchId, setPostageBatchId] = useState<string>('')
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
     const [isBeeRunning, setBeeRunning] = useState(false)
     const [hasPostageStamp, setHasPostageStamp] = useState(false)
@@ -41,12 +44,17 @@ function App() {
     }, [])
 
     async function checkBee() {
-        fetch('http://localhost:1635/addresses')
+        const api = globalState?.beeDebugApi ?? beeDebugApi
+        fetch(Strings.joinUrl(api, 'health'))
             .then(async () => {
                 if (!isBeeRunning) {
                     setBeeRunning(true)
                 }
-                const beeDebug = new BeeDebug('http://localhost:1635')
+                const beeDebug = new BeeDebug(api)
+                if (postageBatchId) {
+                    setHasPostageStamp(true)
+                    return
+                }
                 const stamps = await beeDebug.getAllPostageBatch()
                 if (stamps.some(x => x.usable)) {
                     if (!hasPostageStamp) {
@@ -68,11 +76,17 @@ function App() {
             checkBee()
         }, Dates.seconds(5))
         return () => clearInterval(interval)
-    }, [])
+    }, [globalState, postageBatchId, beeApi, beeDebugApi])
 
     if (!globalState) {
         return (
             <WelcomePage
+                beeApi={beeApi}
+                setBeeApi={setBeeApi}
+                beeDebugApi={beeDebugApi}
+                setBeeDebugApi={setBeeDebugApi}
+                postageBatchId={postageBatchId}
+                setPostageBatchId={setPostageBatchId}
                 setGlobalState={setGlobalState}
                 isBeeRunning={isBeeRunning}
                 hasPostageStamp={hasPostageStamp}
@@ -81,7 +95,7 @@ function App() {
     }
 
     function insertAsset(reference: string) {
-        setArticleContent(((y: string) => `${y}\n\n![img alt here](http://localhost:1633/bzz/${reference}/)`) as any)
+        setArticleContent(((y: string) => `${y}\n\n![img alt here](${globalState!.beeApi}/bzz/${reference}/)`) as any)
         setShowAssetBrowser(false)
     }
 
