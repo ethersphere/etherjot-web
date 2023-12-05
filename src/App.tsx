@@ -55,12 +55,16 @@ function App() {
                     setHasPostageStamp(true)
                     return
                 }
-                const stamps = await beeDebug.getAllPostageBatch()
-                if (stamps.some(x => x.usable)) {
-                    if (!hasPostageStamp) {
-                        setHasPostageStamp(true)
+                try {
+                    const stamps = await beeDebug.getAllPostageBatch()
+                    if (stamps.some(x => x.usable)) {
+                        if (!hasPostageStamp) {
+                            setHasPostageStamp(true)
+                        }
+                    } else {
+                        setHasPostageStamp(false)
                     }
-                } else {
+                } catch {
                     setHasPostageStamp(false)
                 }
             })
