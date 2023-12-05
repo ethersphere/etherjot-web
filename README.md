@@ -21,6 +21,8 @@ Swarm is a peer-to-peer network of Bee nodes that collectively provide censorshi
 -   Extension: Donation component to accept tips and topups
 -   Extension: Decentralised commenting
 
+Most of the implementation is available in the core library [Libetherjot](https://github.com/ethersphere/libetherjot).
+
 ## Setup
 
 ### Recommended
