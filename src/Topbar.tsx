@@ -36,7 +36,7 @@ export function Topbar({ setTab, articleContent, globalState, isBeeRunning, hasP
             <div>
                 <label>Swarm Hash</label>
                 <input type="text" value={globalState.feed} readOnly />
-                <a href={`http://localhost:1633/bzz/${globalState.feed}/`} target="_blank">
+                <a href={`${globalState.beeApi}/bzz/${globalState.feed}/`} target="_blank">
                     Open
                 </a>
             </div>
@@ -44,11 +44,11 @@ export function Topbar({ setTab, articleContent, globalState, isBeeRunning, hasP
                 <Row gap={16}>
                     <Row gap={4}>
                         <label>Bee</label>
-                        <SquareImage size={32} src={isBeeRunning ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={isBeeRunning ? 'yes.png' : 'no.png'} />
                     </Row>
                     <Row gap={4}>
                         <label>Stamp</label>
-                        <SquareImage size={32} src={hasPostageStamp ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={hasPostageStamp ? 'yes.png' : 'no.png'} />
                     </Row>
                 </Row>
             </div>

@@ -16,7 +16,7 @@ export function AssetPicker({ globalState, callback }: Props) {
                 </div>
                 <div className="thumbnail-container">
                     {globalState.assets.map(x => (
-                        <PickableAsset key={x.reference} asset={x} callback={callback} />
+                        <PickableAsset key={x.reference} globalState={globalState} asset={x} callback={callback} />
                     ))}
                 </div>
             </div>

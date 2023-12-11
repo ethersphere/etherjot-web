@@ -40,7 +40,7 @@ export function Thumbnail({ globalState, name, contentType, reference, insertAss
 
     return (
         <div className="thumbnail">
-            <img src={`http://localhost:1633/bzz/${reference}`} />
+            <img src={`${globalState.beeApi}/bzz/${reference}`} />
             <div className="thumbnail-name">{name}</div>
             <Horizontal gap={8}>
                 <button className="button-xs" onClick={() => insertAsset(reference)}>
