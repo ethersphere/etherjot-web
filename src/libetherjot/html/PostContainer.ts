@@ -7,7 +7,7 @@ export function createPostContainer(globalState: GlobalState, depth: number, fil
         const articles = globalState.articles.filter(x => x.category === filter || x.tags.includes(filter))
         return `
             <div class="post-container post-container-regular">
-                ${articles.map(x => buildArticle(x, 'regular', depth)).join('\n')}
+                ${articles.map(x => buildArticle(globalState, x, 'regular', depth)).join('\n')}
             </div>
         `
     }
@@ -36,16 +36,18 @@ export function createPostContainer(globalState: GlobalState, depth: number, fil
         'regular',
         (a, b) => b.createdAt - a.createdAt
     )
-    const innerHtmlH1 = `${articles.h1.map(x => buildArticle(x, 'h1', depth)).join('\n')}`
+    const innerHtmlH1 = `${articles.h1.map(x => buildArticle(globalState, x, 'h1', depth)).join('\n')}`
     const innerHtmlRegular1 = `${articles.regular
         .slice(0, 4)
-        .map(x => buildArticle(x, 'regular', depth))
+        .map(x => buildArticle(globalState, x, 'regular', depth))
         .join('\n')}`
-    const innerHtmlH2 = `${articles.h2.map(x => buildArticle(x, 'h2', depth)).join('\n')}`
-    const innerHtmlHighlight = `${articles.highlight.map(x => buildArticle(x, 'highlight', depth)).join('\n')}`
+    const innerHtmlH2 = `${articles.h2.map(x => buildArticle(globalState, x, 'h2', depth)).join('\n')}`
+    const innerHtmlHighlight = `${articles.highlight
+        .map(x => buildArticle(globalState, x, 'highlight', depth))
+        .join('\n')}`
     const innerHtmlRegular2 = `${articles.regular
         .slice(4, 12)
-        .map(x => buildArticle(x, 'regular', depth))
+        .map(x => buildArticle(globalState, x, 'regular', depth))
         .join('\n')}`
     return `
         ${innerHtmlH1 ? `<div class="post-container-h1">${innerHtmlH1}</div>` : ''}
@@ -69,6 +71,22 @@ function maybeSurround(globalState: GlobalState, string: string, kind: string): 
     return string ? `<div class="post-container post-container-${kind}">${string}</div>` : ''
 }
 
-function buildArticle(x: Article, as: 'h1' | 'h2' | 'highlight' | 'regular', depth: number): string {
-    return createPost(x.title, x.preview, x.category, x.tags, x.createdAt, x.path, x.banner || 'default.png', as, depth)
+function buildArticle(
+    globalState: GlobalState,
+    x: Article,
+    as: 'h1' | 'h2' | 'highlight' | 'regular',
+    depth: number
+): string {
+    return createPost(
+        globalState,
+        x.title,
+        x.preview,
+        x.category,
+        x.tags,
+        x.createdAt,
+        x.path,
+        x.banner || 'default.png',
+        as,
+        depth
+    )
 }

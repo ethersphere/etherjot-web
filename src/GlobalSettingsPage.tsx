@@ -110,7 +110,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                     {headerLogo && (
                         <div>
                             <img
-                                src={`http://localhost:1633/bzz/${headerLogo}`}
+                                src={`http://localhost:1633/bytes/${headerLogo}`}
                                 style={{ width: '48px', height: '48px' }}
                             />
                         </div>

@@ -1,4 +1,3 @@
-import { Strings } from 'cafe-utility'
 import { createDefaultImage } from '../html/DefaultImage'
 import { createFavicon } from '../html/Favicon'
 import { createArticleFontData, createBrandingFontData, createNormalFontData } from '../html/Font'
@@ -43,11 +42,7 @@ export async function recreateMantaray(globalState: GlobalState): Promise<void> 
     }
     for (const asset of globalState.assets) {
         await collection.addHandle(
-            Strings.joinUrl(asset.name),
-            await globalState.swarm.newHandle(asset.name, asset.reference, asset.contentType)
-        )
-        await collection.addHandle(
-            Strings.joinUrl('bzz', asset.reference),
+            asset.name,
             await globalState.swarm.newHandle(asset.name, asset.reference, asset.contentType)
         )
     }

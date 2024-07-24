@@ -81,7 +81,7 @@ function App() {
     }
 
     function insertAsset(reference: string) {
-        setArticleContent((y: string) => `${y}\n\n![img alt here](http://localhost:1633/bzz/${reference}/)`)
+        setArticleContent((y: string) => `${y}\n\n![img alt here](http://localhost:1633/bytes/${reference})`)
         setShowAssetBrowser(false)
     }
 

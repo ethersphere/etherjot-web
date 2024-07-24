@@ -1,5 +1,6 @@
 import { Optional, Strings } from 'cafe-utility'
 import { parse } from 'marked'
+import { useState } from 'react'
 import { Article, Asset, GlobalState, createArticlePage, parseMarkdown } from './libetherjot'
 import { save } from './Saver'
 import './Sidebar.css'
@@ -48,12 +49,14 @@ export function OptionsBar({
     setShowAssetPicker,
     setAssetPickerCallback
 }: Props) {
+    const [loading, setLoading] = useState(false)
     const markdown = parseMarkdown(articleContent)
 
     async function onPublish() {
         if (!articleTitle || !articleContent) {
             return
         }
+        setLoading(true)
         if (editing) {
             globalState.articles = globalState.articles.filter(x => x.html !== editing.html)
         }
@@ -100,13 +103,13 @@ export function OptionsBar({
             </Vertical>
             <Vertical left gap={2} full>
                 <label>Banner image</label>
-                {articleBanner && <img src={`http://localhost:1633${articleBanner}`} />}
+                {articleBanner && <img src={`http://localhost:1633/bytes/${articleBanner}`} />}
                 <button
                     onClick={() => {
                         setShowAssetPicker(true)
                         const callbackFn = (asset: Optional<Asset>) => {
                             asset.ifPresent(a => {
-                                setArticleBanner('/bzz/' + a.reference)
+                                setArticleBanner(a.reference)
                             })
                             setShowAssetPicker(false)
                         }
@@ -146,8 +149,8 @@ export function OptionsBar({
                 <label>Tags (comma separated)</label>
                 <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
             </Vertical>
-            <button onClick={onPublish} disabled={!articleTitle || !articleCategory}>
-                {editing ? 'Update' : 'Publish'}
+            <button onClick={onPublish} disabled={!articleTitle || !articleCategory || loading}>
+                {loading ? 'Saving...' : editing ? 'Update' : 'Publish'}
             </button>
         </aside>
     )

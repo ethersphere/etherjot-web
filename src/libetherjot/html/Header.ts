@@ -1,4 +1,5 @@
 import { GlobalState } from '../engine/GlobalState'
+import { createImage } from './Image'
 import { createLogoSvg } from './LogoSvg'
 import { createNav } from './Nav'
 
@@ -14,6 +15,9 @@ export async function createHeader(globalState: GlobalState, depth: number, acti
             <a href="${linkAddress}" target="_blank">${linkLabel}</a>
         </div>`
             : ''
+    const logo = globalState.configuration.header.logo
+        ? globalState.assets.find(x => x.reference === globalState.configuration.header.logo)
+        : null
 
     return `
     <header>
@@ -21,11 +25,7 @@ export async function createHeader(globalState: GlobalState, depth: number, acti
             <div class="header-top-row">
                 <a href="${'../'.repeat(depth)}">
                     <div class="blog-name-row">
-                        ${
-                            globalState.configuration.header.logo
-                                ? `<img src="/bzz/${globalState.configuration.header.logo}" />`
-                                : createLogoSvg()
-                        }
+                        ${logo ? createImage(logo, depth) : createLogoSvg()}
                         <${variant} class="blog-name">${title}</${variant}>
                     </div>
                 </a>

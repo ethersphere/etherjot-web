@@ -14,7 +14,7 @@ export function createRelatedArticles(
     if (!articles.length) {
         return null
     }
-    const innerHtml = `${articles.map(x => buildArticle(x, 'regular', depth)).join('\n')}`
+    const innerHtml = `${articles.map(x => buildArticle(globalState, x, 'regular', depth)).join('\n')}`
     return `
     <div class="post-container post-container-regular">
         ${innerHtml}
@@ -22,8 +22,14 @@ export function createRelatedArticles(
     `
 }
 
-function buildArticle(x: Article, as: 'h1' | 'h2' | 'highlight' | 'regular', depth: number): string {
+function buildArticle(
+    globalState: GlobalState,
+    x: Article,
+    as: 'h1' | 'h2' | 'highlight' | 'regular',
+    depth: number
+): string {
     return createPost(
+        globalState,
         x.title,
         x.preview,
         x.category,

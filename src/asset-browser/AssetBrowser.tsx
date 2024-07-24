@@ -49,11 +49,9 @@ export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser,
                         imageAlt: 'The uploaded picture',
                         didOpen: async () => {
                             Swal.showLoading()
-                            const hash = await (
-                                await globalState.swarm.newResource('upload', byteArray, contentType)
-                            ).save()
+                            const hash = await (await globalState.swarm.newRawData(byteArray, contentType)).save()
                             globalState.assets.push({
-                                reference: hash.hash,
+                                reference: hash,
                                 contentType,
                                 name: result.name
                             })

@@ -39,6 +39,25 @@ export async function createArticlePage(
         ? `<div class="content-area"><h2 class="read-more">Read more...</h2>${relatedArticlesHtml}</div>`
         : ``
     const head = `<title>${title} | ${globalState.configuration.title}</title>${createStyleSheet(2)}`
+    const bannerAsset = banner ? globalState.assets.find(x => x.reference === banner) : null
+    const bannerSrc = bannerAsset ? '../'.repeat(2) + bannerAsset.name : '../'.repeat(2) + 'default.png'
+    const bannerHtml = `<div class="content-area onpage-banner">
+                <img src="${bannerSrc}" class="banner" />
+            </div>`
+    const imageBlocks = Strings.extractAllBlocks(processedArticle.html, {
+        opening: '"http://localhost:1633/bytes/',
+        closing: '"',
+        exclusive: true
+    })
+    for (const block of imageBlocks) {
+        const asset = globalState.assets.find(x => x.reference === block)
+        if (asset) {
+            processedArticle.html = processedArticle.html.replaceAll(
+                `"http://localhost:1633/bytes/${block}"`,
+                '../'.repeat(2) + asset.name
+            )
+        }
+    }
     const body = `
     ${await createHeader(globalState, 2, 'Latest', 'p')}
     <main>
@@ -52,11 +71,7 @@ export async function createArticlePage(
                     <h1>${title}</h1>
                 </div>
             </div>
-            <div class="content-area onpage-banner">
-                <img src="${
-                    !banner || banner === 'default.png' ? '../'.repeat(2) + 'default.png' : banner
-                }" class="banner" />
-            </div>
+            ${bannerHtml}
             <div class="content-area grid-container">
                 <aside class="grid-3">
                     <div class="article-sidebar">
