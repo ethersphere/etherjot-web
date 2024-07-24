@@ -1,4 +1,4 @@
-import { Asset } from 'libetherjot'
+import { Asset } from '../libetherjot'
 
 interface Props {
     asset: Asset

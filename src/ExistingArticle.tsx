@@ -1,11 +1,11 @@
 import { Bee } from '@ethersphere/bee-js'
-import { Article, GlobalState } from 'libetherjot'
 import Swal from 'sweetalert2'
 import { DEFAULT_CONTENT } from './Constants'
 import { Horizontal } from './Horizontal'
 import { Row } from './Row'
 import { save } from './Saver'
 import { Vertical } from './Vertical'
+import { Article, GlobalState } from './libetherjot'
 
 interface Props {
     article: Article

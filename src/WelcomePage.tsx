@@ -1,9 +1,9 @@
-import { GlobalState, createDefaultGlobalState, getGlobalState } from 'libetherjot'
 import { useState } from 'react'
 import { Horizontal } from './Horizontal'
 import { save } from './Saver'
 import { SquareImage } from './SquareImage'
 import './WelcomePage.css'
+import { GlobalState, createDefaultGlobalState, getGlobalState } from './libetherjot'
 
 interface Props {
     setGlobalState: (state: GlobalState) => void
@@ -14,8 +14,10 @@ interface Props {
 export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: Props) {
     const [blogName, setBlogName] = useState('')
     const [accepted, setAccepted] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     function onClick() {
+        setLoading(true)
         createDefaultGlobalState(blogName)
             .then(json => getGlobalState(json))
             .then(async x => {
@@ -31,13 +33,13 @@ export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: P
             <ul>
                 <li>
                     <Horizontal gap={8}>
-                        <SquareImage size={32} src={isBeeRunning ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={isBeeRunning ? '/etherjot/yes.png' : '/etherjot/no.png'} />
                         Local Bee node
                     </Horizontal>
                 </li>
                 <li>
                     <Horizontal gap={8}>
-                        <SquareImage size={32} src={hasPostageStamp ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={hasPostageStamp ? '/etherjot/yes.png' : '/etherjot/no.png'} />
                         Usable postage stamp
                     </Horizontal>
                 </li>
@@ -54,8 +56,8 @@ export function WelcomePage({ setGlobalState, isBeeRunning, hasPostageStamp }: P
                     onChange={event => setBlogName(event.target.value)}
                     disabled={!hasPostageStamp}
                 />
-                <button onClick={onClick} disabled={!blogName || !accepted}>
-                    Create
+                <button onClick={onClick} disabled={!blogName || !accepted || loading}>
+                    {loading ? 'Creating...' : 'Create'}
                 </button>
             </Horizontal>
         </div>

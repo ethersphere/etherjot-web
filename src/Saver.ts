@@ -1,4 +1,4 @@
-import { GlobalState, recreateMantaray, saveGlobalState } from 'libetherjot'
+import { GlobalState, recreateMantaray, saveGlobalState } from './libetherjot'
 
 export async function save(globalState: GlobalState) {
     await recreateMantaray(globalState)

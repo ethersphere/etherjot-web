@@ -1,6 +1,6 @@
-import { GlobalState } from 'libetherjot'
 import Swal from 'sweetalert2'
 import { Horizontal } from '../Horizontal'
+import { GlobalState } from '../libetherjot'
 
 interface Props {
     globalState: GlobalState

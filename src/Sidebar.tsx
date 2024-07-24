@@ -1,10 +1,10 @@
 import { Strings } from 'cafe-utility'
-import { Article, GlobalState } from 'libetherjot'
 import Swal from 'sweetalert2'
 import { DEFAULT_CONTENT } from './Constants'
 import { ExistingArticle } from './ExistingArticle'
 import { Row } from './Row'
 import './Sidebar.css'
+import { Article, GlobalState } from './libetherjot'
 
 interface Props {
     globalState: GlobalState

@@ -1,6 +1,5 @@
-import { BeeDebug } from '@ethersphere/bee-js'
+import { Bee } from '@ethersphere/bee-js'
 import { Dates, Strings } from 'cafe-utility'
-import { Article, GlobalState, getGlobalState } from 'libetherjot'
 import { useEffect, useState } from 'react'
 import './App.css'
 import { DEFAULT_CONTENT } from './Constants'
@@ -12,6 +11,7 @@ import { Topbar } from './Topbar'
 import { WelcomePage } from './WelcomePage'
 import { AssetBrowser } from './asset-browser/AssetBrowser'
 import { AssetPicker } from './asset-browser/AssetPicker'
+import { Article, GlobalState, getGlobalState } from './libetherjot'
 
 function App() {
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
@@ -41,13 +41,13 @@ function App() {
     }, [])
 
     async function checkBee() {
-        fetch('http://localhost:1635/addresses')
+        fetch('http://localhost:1633/addresses')
             .then(async () => {
                 if (!isBeeRunning) {
                     setBeeRunning(true)
                 }
-                const beeDebug = new BeeDebug('http://localhost:1635')
-                const stamps = await beeDebug.getAllPostageBatch()
+                const bee = new Bee('http://localhost:1633')
+                const stamps = await bee.getAllPostageBatch()
                 if (stamps.some(x => x.usable)) {
                     if (!hasPostageStamp) {
                         setHasPostageStamp(true)

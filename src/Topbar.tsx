@@ -1,9 +1,9 @@
-import { GlobalState } from 'libetherjot'
 import Swal from 'sweetalert2'
 import { DEFAULT_CONTENT } from './Constants'
 import { Row } from './Row'
 import { SquareImage } from './SquareImage'
 import './Topbar.css'
+import { GlobalState } from './libetherjot'
 
 interface Props {
     setTab: (tab: string) => void
@@ -44,11 +44,11 @@ export function Topbar({ setTab, articleContent, globalState, isBeeRunning, hasP
                 <Row gap={16}>
                     <Row gap={4}>
                         <label>Bee</label>
-                        <SquareImage size={32} src={isBeeRunning ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={isBeeRunning ? '/etherjot/yes.png' : '/etherjot/no.png'} />
                     </Row>
                     <Row gap={4}>
                         <label>Stamp</label>
-                        <SquareImage size={32} src={hasPostageStamp ? '/yes.png' : '/no.png'} />
+                        <SquareImage size={32} src={hasPostageStamp ? '/etherjot/yes.png' : '/etherjot/no.png'} />
                     </Row>
                 </Row>
             </div>

@@ -1,8 +1,8 @@
-import { Strings, Types } from 'cafe-utility'
-import { GlobalState } from 'libetherjot'
+import { Binary, Strings, Types } from 'cafe-utility'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { save } from '../Saver'
+import { GlobalState } from '../libetherjot'
 import './AssetBrowser.css'
 import { Thumbnail } from './Thumbnail'
 
@@ -33,8 +33,14 @@ export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser,
                     }
                     const dataUri = Types.asString(event.target.result)
                     const contentType = Strings.betweenNarrow(dataUri, 'data:', ';')
+                    if (!contentType) {
+                        throw Error('Could not determine content type')
+                    }
                     const base64String = Strings.after(dataUri, 'base64,')
-                    const byteArray = Strings.base64ToUint8Array(base64String)
+                    if (!base64String) {
+                        throw Error('Could not determine base64 string')
+                    }
+                    const byteArray = Binary.base64ToUint8Array(base64String)
                     Swal.fire({
                         title: 'Uploading on Swarm...',
                         imageUrl: event.target.result as string,
@@ -43,7 +49,9 @@ export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser,
                         imageAlt: 'The uploaded picture',
                         didOpen: async () => {
                             Swal.showLoading()
-                            const hash = await globalState.swarm.newResource('upload', byteArray, contentType).save()
+                            const hash = await (
+                                await globalState.swarm.newResource('upload', byteArray, contentType)
+                            ).save()
                             globalState.assets.push({
                                 reference: hash.hash,
                                 contentType,

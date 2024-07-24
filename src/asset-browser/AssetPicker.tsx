@@ -1,4 +1,4 @@
-import { Asset, GlobalState } from 'libetherjot'
+import { Asset, GlobalState } from '../libetherjot'
 import './AssetBrowser.css'
 import { PickableAsset } from './PickableAsset'
 
