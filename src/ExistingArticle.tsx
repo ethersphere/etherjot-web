@@ -62,7 +62,14 @@ export function ExistingArticle({
         setArticleCategory(article.category)
         setArticleTags(article.tags.join(', '))
         setArticleCommentsFeed(article.commentsFeed)
-        setArticleType(article.kind as any)
+        let articleType: 'regular' | 'h1' | 'h2' = 'regular'
+        if (article.kind === 'h1') {
+            articleType = 'h1'
+        }
+        if (article.kind === 'h2') {
+            articleType = 'h2'
+        }
+        setArticleType(articleType)
         setTab('new-post')
     }
 

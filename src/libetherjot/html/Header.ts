@@ -1,13 +1,12 @@
-import { Objects } from 'cafe-utility'
 import { GlobalState } from '../engine/GlobalState'
 import { createLogoSvg } from './LogoSvg'
 import { createNav } from './Nav'
 
 export async function createHeader(globalState: GlobalState, depth: number, active: string, variant = 'h1') {
-    const title = Objects.getFirstDeep(globalState.configuration as any, ['header.title', 'title'])
-    const description = Objects.getDeep(globalState.configuration as any, 'header.description')
-    const linkLabel = Objects.getDeep(globalState.configuration as any, 'header.linkLabel')
-    const linkAddress = Objects.getDeep(globalState.configuration as any, 'header.linkAddress')
+    const title = globalState.configuration.header.title || globalState.configuration.title
+    const description = globalState.configuration.header.description
+    const linkLabel = globalState.configuration.header.linkLabel
+    const linkAddress = globalState.configuration.header.linkAddress
     const descriptionHtml = description ? `<p class="blog-description">${description}</p>` : ''
     const linkHtml =
         linkLabel && linkAddress
@@ -24,7 +23,7 @@ export async function createHeader(globalState: GlobalState, depth: number, acti
                     <div class="blog-name-row">
                         ${
                             globalState.configuration.header.logo
-                                ? `<img src="${'../'.repeat(depth + 1)}${globalState.configuration.header.logo}" />`
+                                ? `<img src="/bzz/${globalState.configuration.header.logo}" />`
                                 : createLogoSvg()
                         }
                         <${variant} class="blog-name">${title}</${variant}>

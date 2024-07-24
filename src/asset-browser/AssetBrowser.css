@@ -22,8 +22,11 @@
 .asset-browser-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 8px;
+}
+.asset-browser-title {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 .thumbnail-container {
     display: grid;

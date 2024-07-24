@@ -8,7 +8,7 @@ interface Props {
     contentType: string
     reference: string
     insertAsset: (reference: string) => void
-    rerender: any
+    rerender: (callback: (x: number) => number) => void
 }
 
 export function Thumbnail({ globalState, name, contentType, reference, insertAsset, rerender }: Props) {
@@ -23,7 +23,7 @@ export function Thumbnail({ globalState, name, contentType, reference, insertAss
             return
         }
         globalState.assets.find(x => x.reference === reference)!.name = newName.value!
-        rerender((x: any) => x + 1)
+        rerender(x => x + 1)
     }
 
     async function onDelete() {
@@ -35,7 +35,7 @@ export function Thumbnail({ globalState, name, contentType, reference, insertAss
             return
         }
         globalState.assets = globalState.assets.filter(x => x.reference !== reference)
-        rerender((x: any) => x + 1)
+        rerender(x => x + 1)
     }
 
     return (

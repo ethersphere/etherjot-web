@@ -1,5 +1,5 @@
 import { Bee } from '@ethersphere/bee-js'
-import { Dates, Strings } from 'cafe-utility'
+import { Dates, Optional, Strings } from 'cafe-utility'
 import { useEffect, useState } from 'react'
 import './App.css'
 import { DEFAULT_CONTENT } from './Constants'
@@ -11,7 +11,7 @@ import { Topbar } from './Topbar'
 import { WelcomePage } from './WelcomePage'
 import { AssetBrowser } from './asset-browser/AssetBrowser'
 import { AssetPicker } from './asset-browser/AssetPicker'
-import { Article, GlobalState, getGlobalState } from './libetherjot'
+import { Article, Asset, GlobalState, getGlobalState } from './libetherjot'
 
 function App() {
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
@@ -29,7 +29,7 @@ function App() {
     const [commentsFeed, setCommentsFeed] = useState<string>(Strings.randomHex(40))
     const [showAssetBrowser, setShowAssetBrowser] = useState(false)
     const [showAssetPicker, setShowAssetPicker] = useState(false)
-    const [assetPickerCallback, setAssetPickerCallback] = useState<any>(() => {})
+    const [assetPickerCallback, setAssetPickerCallback] = useState<(asset: Optional<Asset>) => void>(() => () => {})
 
     useEffect(() => {
         const storedState = localStorage.getItem('state')
@@ -81,7 +81,7 @@ function App() {
     }
 
     function insertAsset(reference: string) {
-        setArticleContent(((y: string) => `${y}\n\n![img alt here](http://localhost:1633/bzz/${reference}/)`) as any)
+        setArticleContent((y: string) => `${y}\n\n![img alt here](http://localhost:1633/bzz/${reference}/)`)
         setShowAssetBrowser(false)
     }
 

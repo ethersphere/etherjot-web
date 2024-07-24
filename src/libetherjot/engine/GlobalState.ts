@@ -127,17 +127,24 @@ export async function getGlobalState(json: Record<string, any>): Promise<GlobalS
             path: Types.asString(x.path)
         })),
         articles: Types.asArray(json.articles).map((x: any) => {
+            let kind: 'regular' | 'h1' | 'h2' = 'regular'
+            if (x.kind === 'h1') {
+                kind = 'h1'
+            }
+            if (x.kind === 'h2') {
+                kind = 'h2'
+            }
             return {
                 title: Types.asString(x.title),
                 preview: Types.asString(x.preview),
                 markdown: Types.asString(x.markdown),
                 html: Types.asString(x.html),
                 category: Types.asString(x.category),
-                tags: Types.asArray(x.tags || []).map(Types.asString),
+                tags: Types.asArray(x.tags || []).map(x => Types.asString(x)),
                 createdAt: Types.asNumber(x.createdAt),
                 path: Types.asString(x.path),
                 banner: x.banner || null,
-                kind: Types.asString(x.kind) as any,
+                kind,
                 stamp: Types.asString(x.stamp),
                 commentsFeed: Types.asString(x.commentsFeed)
             }

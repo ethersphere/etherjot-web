@@ -1,3 +1,4 @@
+import { Optional } from 'cafe-utility'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { Container } from './Container'
@@ -10,7 +11,7 @@ interface Props {
     globalState: GlobalState
     setGlobalState: (state: GlobalState) => void
     setShowAssetPicker: (show: boolean) => void
-    setAssetPickerCallback: any
+    setAssetPickerCallback: (callback: (asset: Optional<Asset>) => void) => void
 }
 
 export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPicker, setAssetPickerCallback }: Props) {
@@ -116,8 +117,10 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                     )}
                     <button
                         onClick={() => {
-                            setAssetPickerCallback(() => (asset: Asset) => {
-                                setHeaderLogo(asset.reference)
+                            setAssetPickerCallback(() => (asset: Optional<Asset>) => {
+                                asset.ifPresent(a => {
+                                    setHeaderLogo(a.reference)
+                                })
                                 setShowAssetPicker(false)
                             })
                             setShowAssetPicker(true)

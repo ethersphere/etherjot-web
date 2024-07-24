@@ -11,8 +11,8 @@ export function createPostContainer(globalState: GlobalState, depth: number, fil
             </div>
         `
     }
-    if (globalState.configuration.main?.highlight) {
-        const highlight = globalState.configuration.main?.highlight as string
+    if (globalState.configuration.main.highlight) {
+        const highlight = globalState.configuration.main.highlight
         for (const article of globalState.articles) {
             if (article.kind !== 'regular') {
                 continue

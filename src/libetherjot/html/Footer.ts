@@ -1,4 +1,4 @@
-import { Objects, Strings } from 'cafe-utility'
+import { Strings } from 'cafe-utility'
 import { GlobalState } from '../engine/GlobalState'
 import { createDiscordSvg } from './DiscordSvg'
 import { createGithubSvg } from './GithubSvg'
@@ -9,22 +9,16 @@ import { createTwitterSvg } from './TwitterSvg'
 import { createYoutubeSvg } from './YoutubeSvg'
 
 export async function createFooter(globalState: GlobalState, depth: number) {
-    const description = Objects.getDeep(globalState.configuration as any, 'footer.description')
-    const descriptionHtml = description ? `<p class="footer-description">${description}</p>` : ''
-    const discord = Objects.getDeep(globalState.configuration as any, 'footer.links.discord')
-    const discordHtml = discord ? createLinkSvg(createDiscordSvg(), 'Discord', discord as string) : ''
-    const github = Objects.getDeep(globalState.configuration as any, 'footer.links.github')
-    const githubHtml = github ? createLinkSvg(createGithubSvg(), 'GitHub', github as string) : ''
-    const twitter = Objects.getDeep(globalState.configuration as any, 'footer.links.twitter')
-    const twitterHtml = twitter ? createLinkSvg(createTwitterSvg(), 'Twitter', twitter as string) : ''
-    const reddit = Objects.getDeep(globalState.configuration as any, 'footer.links.reddit')
-    const redditHtml = reddit ? createLinkSvg(createRedditSvg(), 'Reddit', reddit as string) : ''
-    const youtube = Objects.getDeep(globalState.configuration as any, 'footer.links.youtube')
-    const youtubeHtml = youtube ? createLinkSvg(createYoutubeSvg(), 'YouTube', youtube as string) : ''
-    const link = Objects.getDeep(globalState.configuration as any, 'header.link')
-    const linkHtml = link
+    const footer = globalState.configuration.footer
+    const descriptionHtml = footer.description ? `<p class="footer-description">${footer.description}</p>` : ''
+    const discordHtml = footer.links.discord ? createLinkSvg(createDiscordSvg(), 'Discord', footer.links.discord) : ''
+    const githubHtml = footer.links.github ? createLinkSvg(createGithubSvg(), 'GitHub', footer.links.github) : ''
+    const twitterHtml = footer.links.twitter ? createLinkSvg(createTwitterSvg(), 'Twitter', footer.links.twitter) : ''
+    const redditHtml = footer.links.reddit ? createLinkSvg(createRedditSvg(), 'Reddit', footer.links.reddit) : ''
+    const youtubeHtml = footer.links.youtube ? createLinkSvg(createYoutubeSvg(), 'YouTube', footer.links.youtube) : ''
+    const linkHtml = globalState.configuration.header.linkAddress
         ? `${Strings.resolveMarkdownLinks(
-              link as string,
+              globalState.configuration.header.linkAddress,
               (_, link) => `<a class="footer-link" href="${link}" target="_blank">${createHomeSvg()} Visit website</a>`
           )}`
         : ''

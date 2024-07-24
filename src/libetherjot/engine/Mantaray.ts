@@ -46,6 +46,10 @@ export async function recreateMantaray(globalState: GlobalState): Promise<void> 
             Strings.joinUrl(asset.name),
             await globalState.swarm.newHandle(asset.name, asset.reference, asset.contentType)
         )
+        await collection.addHandle(
+            Strings.joinUrl('bzz', asset.reference),
+            await globalState.swarm.newHandle(asset.name, asset.reference, asset.contentType)
+        )
     }
     await collection.save()
     const website = await globalState.swarm.newWebsite(globalState.wallet.privateKey, collection)

@@ -1,8 +1,9 @@
-import { Strings } from 'cafe-utility'
+import { Optional, Strings } from 'cafe-utility'
 import { parse } from 'marked'
+import { Article, Asset, GlobalState, createArticlePage, parseMarkdown } from './libetherjot'
 import { save } from './Saver'
 import './Sidebar.css'
-import { Article, Asset, GlobalState, createArticlePage, parseMarkdown } from './libetherjot'
+import { Vertical } from './Vertical'
 
 interface Props {
     globalState: GlobalState
@@ -23,7 +24,7 @@ interface Props {
     articleDate: string
     setArticleDate: (date: string) => void
     setShowAssetPicker: (show: boolean) => void
-    setAssetPickerCallback: any
+    setAssetPickerCallback: (callback: (asset: Optional<Asset>) => void) => void
 }
 
 export function OptionsBar({
@@ -79,46 +80,72 @@ export function OptionsBar({
 
     return (
         <aside className="sidebar">
-            <label>
-                <strong>Title</strong>
-            </label>
-            <input type="text" value={articleTitle} onChange={event => setArticleTitle(event.target.value)} />
-            <label>
-                <strong>Category</strong>
-            </label>
-            <input type="text" value={articleCategory} onChange={event => setArticleCategory(event.target.value)} />
-            <label>
-                <strong>Date</strong>
-            </label>
-            <input type="text" value={articleDate} onChange={event => setArticleDate(event.target.value)} />
-            <label>Banner image</label>
-            {articleBanner && <img src={`http://localhost:1633${articleBanner}`} />}
-            <button
-                onClick={() => {
-                    setShowAssetPicker(true)
-                    const callbackFn = (asset: Asset) => {
-                        setArticleBanner('/bzz/' + asset.reference)
-                        setShowAssetPicker(false)
-                    }
-                    setAssetPickerCallback(() => callbackFn)
-                }}
-            >
-                Select
-            </button>
-            <label>Type</label>
-            <select onChange={event => setArticleType(event.target.value as any)}>
-                <option value="regular" selected={articleType === 'regular'}>
-                    Regular
-                </option>
-                <option value="h1" selected={articleType === 'h1'}>
-                    Primary
-                </option>
-                <option value="h2" selected={articleType === 'h2'}>
-                    Secondary
-                </option>
-            </select>
-            <label>Tags (comma separated)</label>
-            <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
+            <Vertical left gap={2}>
+                <label>
+                    <strong>Title*</strong>
+                </label>
+                <input type="text" value={articleTitle} onChange={event => setArticleTitle(event.target.value)} />
+            </Vertical>
+            <Vertical left gap={2}>
+                <label>
+                    <strong>Category*</strong>
+                </label>
+                <input type="text" value={articleCategory} onChange={event => setArticleCategory(event.target.value)} />
+            </Vertical>
+            <Vertical left gap={2}>
+                <label>
+                    <strong>Date*</strong>
+                </label>
+                <input type="text" value={articleDate} onChange={event => setArticleDate(event.target.value)} />
+            </Vertical>
+            <Vertical left gap={2} full>
+                <label>Banner image</label>
+                {articleBanner && <img src={`http://localhost:1633${articleBanner}`} />}
+                <button
+                    onClick={() => {
+                        setShowAssetPicker(true)
+                        const callbackFn = (asset: Optional<Asset>) => {
+                            asset.ifPresent(a => {
+                                setArticleBanner('/bzz/' + a.reference)
+                            })
+                            setShowAssetPicker(false)
+                        }
+                        setAssetPickerCallback(() => callbackFn)
+                    }}
+                >
+                    Select
+                </button>
+            </Vertical>
+            <Vertical left gap={2} full>
+                <label>Type</label>
+                <select
+                    onChange={event => {
+                        if (event.target.value === 'regular') {
+                            setArticleType('regular')
+                        }
+                        if (event.target.value === 'h1') {
+                            setArticleType('h1')
+                        }
+                        if (event.target.value === 'h2') {
+                            setArticleType('h2')
+                        }
+                    }}
+                >
+                    <option value="regular" selected={articleType === 'regular'}>
+                        Regular
+                    </option>
+                    <option value="h1" selected={articleType === 'h1'}>
+                        Primary
+                    </option>
+                    <option value="h2" selected={articleType === 'h2'}>
+                        Secondary
+                    </option>
+                </select>
+            </Vertical>
+            <Vertical left gap={2}>
+                <label>Tags (comma separated)</label>
+                <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
+            </Vertical>
             <button onClick={onPublish} disabled={!articleTitle || !articleCategory}>
                 {editing ? 'Update' : 'Publish'}
             </button>

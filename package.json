@@ -4,9 +4,9 @@
     "private": true,
     "homepage": "etherjot",
     "dependencies": {
-        "@ethersphere/bee-js": "^7.0.2",
+        "@ethersphere/bee-js": "^7.1.0",
         "@uiw/react-md-editor": "^3.23.5",
-        "cafe-utility": "^21.4.0",
+        "cafe-utility": "^22.2.0",
         "ethers": "^6.13.0",
         "js-yaml": "^4.1.0",
         "mantaray-js": "^1.0.3",
