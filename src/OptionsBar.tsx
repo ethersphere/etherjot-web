@@ -1,6 +1,7 @@
 import { Optional, Strings } from 'cafe-utility'
 import { parse } from 'marked'
 import { useState } from 'react'
+import { Button } from './Button'
 import { Article, Asset, GlobalState, createArticlePage, parseMarkdown } from './libetherjot'
 import { save } from './Saver'
 import './Sidebar.css'
@@ -104,7 +105,7 @@ export function OptionsBar({
             <Vertical left gap={2} full>
                 <label>Banner image</label>
                 {articleBanner && <img src={`http://localhost:1633/bytes/${articleBanner}`} />}
-                <button
+                <Button
                     onClick={() => {
                         setShowAssetPicker(true)
                         const callbackFn = (asset: Optional<Asset>) => {
@@ -117,7 +118,7 @@ export function OptionsBar({
                     }}
                 >
                     Select
-                </button>
+                </Button>
             </Vertical>
             <Vertical left gap={2} full>
                 <label>Type</label>
@@ -149,9 +150,9 @@ export function OptionsBar({
                 <label>Tags (comma separated)</label>
                 <input type="text" value={articleTags} onChange={event => setArticleTags(event.target.value)} />
             </Vertical>
-            <button onClick={onPublish} disabled={!articleTitle || !articleCategory || loading}>
+            <Button onClick={onPublish} disabled={!articleTitle || !articleCategory || loading}>
                 {loading ? 'Saving...' : editing ? 'Update' : 'Publish'}
-            </button>
+            </Button>
         </aside>
     )
 }

@@ -1,17 +1,23 @@
 @font-face {
     font-family: space-grotesk;
-    src: url('/public/space-grotesk.woff2') format('woff2');
+    src: url('/assets/space-grotesk.woff2') format('woff2');
 }
 
 * {
     box-sizing: border-box;
 }
 
+p,
+h1,
+h2 {
+    margin: 0;
+}
+
 body,
 p {
-    margin: 0;
     font-family: space-grotesk;
 }
+
 body {
     background: #e8e8e8;
 }
@@ -56,7 +62,12 @@ button:disabled {
     background-color: #ff8a00;
 }
 
-.button-xs {
+.button-secondary {
+    background-color: transparent;
+    border: 1px solid #ff8a00;
+}
+
+.button-small {
     padding: 2px 6px;
     font-size: 12px;
 }
@@ -71,6 +82,7 @@ ul {
     padding: 16px;
     padding-bottom: 64px;
 }
+
 .editing {
     padding: 8px;
     background-color: white;

@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import { Button } from '../Button'
 import { Horizontal } from '../Horizontal'
 import { GlobalState } from '../libetherjot'
 
@@ -43,15 +44,15 @@ export function Thumbnail({ globalState, name, contentType, reference, insertAss
             <img src={`http://localhost:1633/bytes/${reference}`} />
             <div className="thumbnail-name">{name}</div>
             <Horizontal gap={8}>
-                <button className="button-xs" onClick={() => insertAsset(reference)}>
+                <Button small onClick={() => insertAsset(reference)}>
                     Insert
-                </button>
-                <button className="button-xs" onClick={onRename}>
+                </Button>
+                <Button small onClick={onRename}>
                     Rename
-                </button>
-                <button className="button-xs" onClick={onDelete}>
+                </Button>
+                <Button small onClick={onDelete}>
                     Delete
-                </button>
+                </Button>
             </Horizontal>
         </div>
     )

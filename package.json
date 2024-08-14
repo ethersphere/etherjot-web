@@ -5,6 +5,7 @@
     "homepage": "etherjot",
     "dependencies": {
         "@ethersphere/bee-js": "^7.1.0",
+        "@fairdatasociety/fdp-storage": "^0.19.0",
         "@uiw/react-md-editor": "^3.23.5",
         "cafe-utility": "^22.2.0",
         "ethers": "^6.13.0",
@@ -18,32 +19,14 @@
     },
     "devDependencies": {
         "@types/js-yaml": "^4.0.9",
-        "@types/node": "^16.18.50",
         "@types/react": "^18.2.21",
         "@types/react-dom": "^18.2.7",
-        "react-scripts": "5.0.1",
-        "typescript": "^4.9.5"
+        "typescript": "^4.9.5",
+        "vite": "^5.4.0"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "start": "vite",
+        "build": "vite build",
         "check": "tsc --noEmit"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
     }
 }
