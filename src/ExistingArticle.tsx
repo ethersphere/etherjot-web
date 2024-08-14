@@ -1,8 +1,8 @@
 import { Bee } from '@ethersphere/bee-js'
 import Swal from 'sweetalert2'
+import { Button } from './Button'
 import { DEFAULT_CONTENT } from './Constants'
 import { Horizontal } from './Horizontal'
-import { Row } from './Row'
 import { save } from './Saver'
 import { Vertical } from './Vertical'
 import { Article, GlobalState } from './libetherjot'
@@ -75,18 +75,18 @@ export function ExistingArticle({
 
     return (
         <Vertical gap={8}>
-            <Row>
+            <Horizontal>
                 <a href={`http://localhost:1633/bzz/${globalState.feed}/${article.path}`} target="_blank">
                     {article.title}
                 </a>
-            </Row>
+            </Horizontal>
             <Horizontal gap={8}>
-                <button className="button-xs" onClick={onEdit}>
+                <Button small onClick={onEdit}>
                     Edit
-                </button>
-                <button className="button-xs" onClick={onDelete}>
+                </Button>
+                <Button small onClick={onDelete}>
                     Delete
-                </button>
+                </Button>
             </Horizontal>
         </Vertical>
     )

@@ -1,6 +1,7 @@
 import { Binary, Strings, Types } from 'cafe-utility'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import { Modal } from '../Modal'
 import { save } from '../Saver'
 import { GlobalState } from '../libetherjot'
 import './AssetBrowser.css'
@@ -67,34 +68,30 @@ export function AssetBrowser({ globalState, setGlobalState, setShowAssetBrowser,
     }
 
     return (
-        <div id="asset-browser-wrapper">
-            <div id="asset-browser">
-                <div className="asset-browser-header">
-                    <button className="asset-browser-close" onClick={onNewAsset}>
-                        Add New
-                    </button>
-                    <div className="asset-browser-title">Asset Browser</div>
-                    <button className="asset-browser-close" onClick={() => setShowAssetBrowser(false)}>
-                        Close
-                    </button>
-                </div>
-                <div className="asset-browser-header">
-                    <p>Click on an image to insert it in the article.</p>
-                </div>
-                <div className="thumbnail-container">
-                    {globalState.assets.map(x => (
-                        <Thumbnail
-                            globalState={globalState}
-                            key={x.reference}
-                            contentType={x.contentType}
-                            name={x.name}
-                            reference={x.reference}
-                            insertAsset={insertAsset}
-                            rerender={rerender}
-                        />
-                    ))}
-                </div>
+        <Modal
+            title="Asset Browser"
+            onClose={() => setShowAssetBrowser(false)}
+            action={{
+                label: 'Add New',
+                callback: onNewAsset
+            }}
+        >
+            <div className="asset-browser-header">
+                <p>Click on an image to insert it in the article.</p>
             </div>
-        </div>
+            <div className="thumbnail-container">
+                {globalState.assets.map(x => (
+                    <Thumbnail
+                        globalState={globalState}
+                        key={x.reference}
+                        contentType={x.contentType}
+                        name={x.name}
+                        reference={x.reference}
+                        insertAsset={insertAsset}
+                        rerender={rerender}
+                    />
+                ))}
+            </div>
+        </Modal>
     )
 }

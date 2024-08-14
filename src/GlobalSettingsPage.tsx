@@ -1,6 +1,7 @@
 import { Optional } from 'cafe-utility'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import { Button } from './Button'
 import { Container } from './Container'
 import { Horizontal } from './Horizontal'
 import { save } from './Saver'
@@ -92,8 +93,8 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
             <h2>Backup / Restore</h2>
             <Container>
                 <Horizontal gap={8}>
-                    <button onClick={onExport}>Export</button>
-                    <button onClick={onImport}>Import</button>
+                    <Button onClick={onExport}>Export</Button>
+                    <Button onClick={onImport}>Import</Button>
                 </Horizontal>
             </Container>
             <h2>Website</h2>
@@ -115,7 +116,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                             />
                         </div>
                     )}
-                    <button
+                    <Button
                         onClick={() => {
                             setAssetPickerCallback(() => (asset: Optional<Asset>) => {
                                 asset.ifPresent(a => {
@@ -127,7 +128,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                         }}
                     >
                         Pick
-                    </button>
+                    </Button>
                 </div>
                 <Setting
                     title="Description"
@@ -170,7 +171,7 @@ export function GlobalSettingsPage({ globalState, setGlobalState, setShowAssetPi
                 </Horizontal>
             </Container>
             <h2>Apply changes</h2>
-            <button onClick={onSave}>Save</button>
+            <Button onClick={onSave}>Save</Button>
         </div>
     )
 }

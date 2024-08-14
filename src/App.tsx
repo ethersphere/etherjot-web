@@ -1,4 +1,5 @@
 import { Bee } from '@ethersphere/bee-js'
+import { FdpStorage } from '@fairdatasociety/fdp-storage'
 import { Dates, Optional, Strings } from 'cafe-utility'
 import { useEffect, useState } from 'react'
 import './App.css'
@@ -17,6 +18,7 @@ function App() {
     const [globalState, setGlobalState] = useState<GlobalState | null>(null)
     const [isBeeRunning, setBeeRunning] = useState(false)
     const [hasPostageStamp, setHasPostageStamp] = useState(false)
+    const [fdp, setFdp] = useState<FdpStorage | null>(null)
     const [tab, setTab] = useState('new-post')
     const [articleTitle, setArticleTitle] = useState('')
     const [articleContent, setArticleContent] = useState(DEFAULT_CONTENT)
@@ -76,6 +78,8 @@ function App() {
                 setGlobalState={setGlobalState}
                 isBeeRunning={isBeeRunning}
                 hasPostageStamp={hasPostageStamp}
+                fdp={fdp}
+                setFdp={setFdp}
             />
         )
     }

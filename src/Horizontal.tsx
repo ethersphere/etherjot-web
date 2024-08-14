@@ -4,7 +4,7 @@ interface Props {
     between?: boolean
 }
 
-export function Horizontal({ children, gap = 0, between }: Props) {
+export function Horizontal({ children, gap = 8, between }: Props) {
     const style = {
         display: 'flex',
         flexDirection: 'row' as 'row',

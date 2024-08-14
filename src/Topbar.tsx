@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
+import { Button } from './Button'
 import { DEFAULT_CONTENT } from './Constants'
-import { Row } from './Row'
+import { Horizontal } from './Horizontal'
 import { SquareImage } from './SquareImage'
 import './Topbar.css'
 import { GlobalState } from './libetherjot'
@@ -31,7 +32,7 @@ export function Topbar({ setTab, articleContent, globalState, isBeeRunning, hasP
     return (
         <div className="topbar">
             <div>
-                <button onClick={onSettings}>Settings</button>
+                <Button onClick={onSettings}>Settings</Button>
             </div>
             <div>
                 <label>Swarm Hash</label>
@@ -41,16 +42,16 @@ export function Topbar({ setTab, articleContent, globalState, isBeeRunning, hasP
                 </a>
             </div>
             <div>
-                <Row gap={16}>
-                    <Row gap={4}>
+                <Horizontal gap={16}>
+                    <Horizontal gap={4}>
                         <label>Bee</label>
-                        <SquareImage size={32} src={isBeeRunning ? '/etherjot/yes.png' : '/etherjot/no.png'} />
-                    </Row>
-                    <Row gap={4}>
+                        <SquareImage size={32} src={isBeeRunning ? '/assets/yes.png' : '/assets/no.png'} />
+                    </Horizontal>
+                    <Horizontal gap={4}>
                         <label>Stamp</label>
-                        <SquareImage size={32} src={hasPostageStamp ? '/etherjot/yes.png' : '/etherjot/no.png'} />
-                    </Row>
-                </Row>
+                        <SquareImage size={32} src={hasPostageStamp ? '/assets/yes.png' : '/assets/no.png'} />
+                    </Horizontal>
+                </Horizontal>
             </div>
         </div>
     )

@@ -1,8 +1,9 @@
 import { Strings } from 'cafe-utility'
 import Swal from 'sweetalert2'
+import { Button } from './Button'
 import { DEFAULT_CONTENT } from './Constants'
 import { ExistingArticle } from './ExistingArticle'
-import { Row } from './Row'
+import { Horizontal } from './Horizontal'
 import './Sidebar.css'
 import { Article, GlobalState } from './libetherjot'
 
@@ -81,11 +82,11 @@ export function Sidebar({
 
     return (
         <aside className="sidebar">
-            <Row>
+            <Horizontal>
                 <p>Posts</p>
-                <button onClick={onNewArticle}>+</button>
-            </Row>
-            <button onClick={() => setShowAssetBrowser(true)}>Asset Browser</button>
+                <Button onClick={onNewArticle}>+</Button>
+            </Horizontal>
+            <Button onClick={() => setShowAssetBrowser(true)}>Asset Browser</Button>
             {editing && (
                 <p className="editing">
                     <strong>Editing:</strong> {editing.title}
@@ -112,7 +113,9 @@ export function Sidebar({
                     </li>
                 ))}
             </ul>
-            <button onClick={onReset}>Reset</button>
+            <Button secondary onClick={onReset}>
+                Reset
+            </Button>
         </aside>
     )
 }

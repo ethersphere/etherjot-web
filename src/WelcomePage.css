@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     row-gap: 32px;
+    padding-top: 15vh;
 }
 
 .welcome-page > h1 {
